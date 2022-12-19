@@ -139,8 +139,6 @@
               <br>
               Check if a provided movie name exists in the database.
             </li>
-            <li>
-            </li>
           </ul>
         </div>
       </div>
