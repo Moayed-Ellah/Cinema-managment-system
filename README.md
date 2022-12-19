@@ -68,9 +68,7 @@
           </h3>
           <ul>
             <li>
-              <code>
-login(user, password)
-              </code>
+              <code>login(user, password)</code>
               <br>
               Check if the provided username and password match a user in the database. If the login is successful, it will create a session file to store the user's login status. If the login fails, it will set an alert message with an error message.
             </li>
