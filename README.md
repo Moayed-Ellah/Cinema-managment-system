@@ -8,32 +8,15 @@
             <li>
               Register and login
             </li>
-            <br>
-            <p align="center">
-            <img src="documentation/login.png" width="600px"/>
-            <br>
-            </p>
             <li>
               View available movies
             </li>
-<p align="center">
-            <img src="documentation/movies.png" width="600px"/>
-            <br>
-            </p>
             <li>
               Search for specific movies
             </li>
-<p align="center">
-            <img src="documentation/search.png" width="600px"/>
-            <br>
-            </p>
             <li>
               Send booking requests for tickets
             </li>
-<p align="center">
-            <img src="documentation/request.png" width="600px"/>
-            <br>
-            </p>
           </ul>
           <p>
             It also allows vendors (such as cinema staff) to:
