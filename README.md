@@ -16,21 +16,24 @@
             <li>
               View available movies
             </li>
+<p align="center">
+            <img src="documentation/movies.png" width="600px"/>
             <br>
-            <img src="documentation/movies.png" width="800px"/>
-            <br>
+            </p>
             <li>
               Search for specific movies
             </li>
+<p align="center">
+            <img src="documentation/search.png" width="600px"/>
             <br>
-            <img src="documentation/search.png" width="800px"/>
-            <br>
+            </p>
             <li>
               Send booking requests for tickets
             </li>
+<p align="center">
+            <img src="documentation/request.png" width="600px"/>
             <br>
-            <img src="documentation/request.png" width="800px"/>
-            <br>
+            </p>
           </ul>
           <p>
             It also allows vendors (such as cinema staff) to:
