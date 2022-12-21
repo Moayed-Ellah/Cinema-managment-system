@@ -9,7 +9,7 @@
               Register and login
             </li>
             <br>
-            <img src="documentation/login.png" width="600px" margin="auto"/>
+            <img src="documentation/login.png" width="600px" margin="0"/>
             <br>
             <li>
               View available movies
