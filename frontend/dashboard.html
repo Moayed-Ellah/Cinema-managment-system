@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--=============== JS ===============-->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <title>dashboard</title>
+</head>
+
+<body>
+    <!--=============== Login From ===============-->
+    <div class="wallet">
+        <div class="cards">
+            <header>
+                <h2>Admin</h2><i class="ph-plus" id="add"></i>
+            </header>
+            <div class="content" data-movie-container></div>
+        </div>
+        <div class="activity">
+            <header>
+                <h2>Tickets</h2><span><i class="ph-ticket"></i></span>
+            </header>
+            <div class="content" data-ticket-container></div>
+        </div>
+    </div>
+
+    <section class="modal container">
+            <div class="modal__container" id="modal-container">
+                <div class="modal__content">
+                    <div class='form__box'>
+                        <input type='text' class='form__input' id='name' placeholder='Enter name'>
+                        <label for='name' class='form__label'>name</label>
+                    <div class='form__shadow'></div>
+                    </div>
+                    <div class='form__box'>
+                        <input type='text' class='form__input' id='description' placeholder='Enter description'>
+                        <label for='description' class='form__label'>description</label>
+                    <div class='form__shadow'></div>
+                    </div>
+                    <div class='form__box'>
+                        <input type='text' class='form__input' id='price' placeholder='Enter price'>
+                        <label for='price' class='form__label'>price</label>
+                    <div class='form__shadow'></div>
+                    </div>
+                     <div class='form__box'>
+                        <input type='text' class='form__input' id='seats' placeholder='Enter seats'>
+                        <label for='seats' class='form__label'>seats</label>
+                    <div class='form__shadow'></div>
+                    </div>
+                    <div class='form__button'>
+                        <button class='form__submit' id="add_movie">Add</button>
+                    </div>
+
+                    <button class="modal__button-link close-modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    <template data-tickets-template>
+        <div class="transaction">
+            <div class="icon-type">
+                <div class="icon" data-status><i class="ph-circle-wavy-warning"></i></div>
+            </div>
+            <div class="description">
+                <div class="info">
+                    <h3 data-ticket-id></h3><span data-username></span> <span data-seats></span>
+                </div>
+                <div class="price" data-test><i></i></div>
+            </div>
+        </div>
+    </template>
+    <template data-movie-template>
+        <div class="card" data-movie-id><img src="assets/images/popcorn.svg" />
+            <div class="number" data-movie-name></div>
+            <div class="expiration" data-movie-seats></div>
+        </div>
+    </template>
+    <!--=============== PY ===============-->
+    <script type='text/javascript' src='eel.js'></script>
+    <!--=============== JS ===============-->
+    <script>
+        const ticketContainer = document.querySelector("[data-ticket-container]")
+        const movieContainer = document.querySelector("[data-movie-container]")
+        const ticketTemplate = document.querySelector("[data-tickets-template]")
+        const movieTemplate = document.querySelector("[data-movie-template]")
+        const add = document.getElementById("add")
+
+
+        add.addEventListener("click", () =>{
+            showModal('modal-container')
+		})
+
+		let tickets_array = []
+
+		function movie_tickets(movie_id){
+		   let movie_name = document.getElementById(movie_id).children[1].innerHTML
+		   document.getElementById(movie_id).classList.toggle("active")
+		   tickets_array.forEach(movie =>{
+				const isVisible = movie.name.includes(movie_name)
+				movie.element.classList.toggle("hide", !isVisible)
+			})
+		}
+
+        async function add_movie(){
+            let movie = document.getElementById("name").value
+            let desc = document.getElementById("description").value
+            let price = document.getElementById("price").value
+            let seats = document.getElementById("seats").value
+            await eel.add(movie, desc, price, seats)
+        }
+
+
+        document.querySelector("#add_movie").onclick = function() {add_movie()};
+
+
+        async function add_tickets(){
+			let tickets_list = await eel.show()()
+            let i = 0
+			tickets_array = tickets_list[1].map(movie =>{
+				let ticket_id = tickets_list[0][i]
+				let ticket_user = tickets_list[1][i]
+				let ticket_name = tickets_list[2][i]
+				const ticket = ticketTemplate.content.cloneNode(true).children[0]
+				ticket.setAttribute('id', i)
+				const ticketStatus = ticket.querySelector("[data-status]")
+                const ticketIssuer = ticket.querySelector("[data-username]")
+                const ticketId = ticket.querySelector("[data-ticket-id]")
+                ticketId.textContent = '#' + ticket_id
+                ticketIssuer.textContent = ticket_user
+				ticketContainer.append(ticket)
+				i++
+				return {name: ticket_name, element: ticket}
+			})
+		}
+
+        async function add_movies(){
+			let movies_list = await eel.list_movies()()
+            let i = 0
+			movies_array = movies_list[1].map(movie =>{
+				let movies_names = movies_list[1][i]
+				let movies_price = movies_list[2][i]
+				const movies = movieTemplate.content.cloneNode(true).children[0]
+				movies.setAttribute('id', i)
+				movies.setAttribute('onClick', 'movie_tickets(this.id)')
+				const name = movies.querySelector("[data-movie-name]")
+				const seats = movies.querySelector("[data-movie-seats]")
+				name.textContent = movies_names
+				seats.textContent = '$'+ movies_price
+				movieContainer.append(movies)
+				i++
+			})
+		}
+
+
+		/*=============== SHOW MODAL ===============*/
+		const showModal = (modalContent) =>{
+			modalContainer = document.getElementById(modalContent)
+			modalContainer.classList.add('show-modal')
+		}
+
+
+		/*=============== CLOSE MODAL ===============*/
+		const closeBtn = document.querySelectorAll('.close-modal')
+
+		function closeModal(){
+			const modalContainer = document.getElementById('modal-container')
+			modalContainer.classList.remove('show-modal')
+		}
+		closeBtn.forEach(c => c.addEventListener('click', closeModal))
+
+		add_movies()
+		add_tickets()
+    </script>
+</body>
+
+</html>

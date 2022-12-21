@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--=============== JS ===============-->
+    <script src="https://unpkg.com/phosphor-icons"></script>
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <title>Login</title>
+</head>
+
+<body>
+    <!--=============== Login From ===============-->
+    <div class='form'>
+        <div class='form__content'>
+            <img class="icon" id='icon' src="assets/images/looney-bag-2.gif"/>
+            <p class="login_alert alert"></p>
+            <div class='form__box'>
+                <input type='text' class='form__input' id='username' placeholder='Enter Username' data-username>
+                <label for='username' class='form__label'>username</label>
+                <div class='form__shadow'></div>
+            </div>
+            <div class='form__box'>
+                <input type='password' class='form__input' id='password' placeholder='Enter Password'>
+                <label for='password' class='form__label'>Password</label>
+                <div class='form__shadow'></div>
+            </div>
+            <div class='form__button'>
+                <button class='form__submit login'>Login</button>
+            </div>
+            <a class="notice" href="signup.html">New here, register?</a>
+        </div>
+    </div>
+
+    <!--=============== PY ===============-->
+    <script type='text/javascript' src='eel.js'></script>
+    <!--=============== JS ===============-->
+    <script>
+
+        const username = document.querySelector('[data-username]')
+        username.addEventListener("input", (e) =>{
+            const value = e.target.value
+            console.log(value)
+            if (value == 'admin'){
+                document.getElementById("icon").src = 'assets/images/looney-crown.gif'
+            }
+            else{
+                document.getElementById("icon").src = 'assets/images/looney-bag-2.gif'
+            }
+		})
+
+
+        async function login() {
+            let username = document.querySelector('[data-username]').value
+            let password = document.getElementById('password').value
+            const user_error = await eel.login(username, password)();
+          document.querySelector(".login_alert").innerHTML = user_error
+          if (user_error == 'admin'){
+            window.location.href = "dashboard.html"
+          }
+          else if(user_error == 'user'){
+            window.location.href = "movies.html"
+          }
+        }
+        document.querySelector(".login").onclick = function() {login()}
+    </script>
+</body>
+
+</html>

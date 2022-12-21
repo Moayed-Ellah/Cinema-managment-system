@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--=============== JS ===============-->
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <title>Signup</title>
+</head>
+
+<body>
+    <!--=============== signup From ===============-->
+    <div class='form'>
+        <div class='form__content'>
+            <img class="icon" src="assets/images/looney-10.gif"/>
+            <p class="signup_alert alert"></p>
+            <div class='form__box'>
+                <input type='text' class='form__input' id='username' placeholder='Enter Username'>
+                <label for='username' class='form__label'>Username</label>
+                <div class='form__shadow'></div>
+            </div>
+            <div class='form__box'>
+                <input type='password' class='form__input' id='password' placeholder='Enter Password'>
+                <label for='password' class='form__label'>Password</label>
+                <div class='form__shadow'></div>
+            </div>
+            <div class='form__box'>
+                <input type='password' class='form__input' id='password_confirmation' placeholder='Renter password'>
+                <label for='password_confirmation' class='form__label'>Confirmation</label>
+                <div class='form__shadow'></div>
+            </div>
+            <div class='form__button'>
+                <button class='form__submit signup'>Sign up</button>
+            </div>
+            <a class="notice" href="login.html">Already a user, login?</a>
+        </div>
+    </div>
+
+
+    <!--=============== PY ===============-->
+    <script type='text/javascript' src='eel.js'></script>
+    <!--=============== JS ===============-->
+    <script>
+        async function signup() {
+          let username = document.getElementById('username').value;
+          let password = document.getElementById('password').value;
+          let password_confirmation = document.getElementById('password_confirmation').value;
+          let user_error = await eel.signup(username, password, password_confirmation)();
+          document.querySelector(".signup_alert").innerHTML = user_error;
+          if (user_error == "! You've registered successfully"){
+            window.location.href = "login.html"
+          }
+        }
+        document.querySelector("#username").onblur = function() {signup()};
+        document.querySelector("#password").onblur = function() {signup()};
+        document.querySelector(".signup").onclick = function() {signup()};
+
+    </script>
+</body>
+
+</html>
