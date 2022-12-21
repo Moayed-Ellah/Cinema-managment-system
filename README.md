@@ -8,6 +8,7 @@
             <li>
               Register and login
             </li>
+            <img src="documentation/login.png"/>
             <li>
               View available movies
             </li>
